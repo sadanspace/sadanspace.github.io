@@ -1,3 +1,1 @@
-# sadanspace.github.io
-
-Hugo PublishDir files
+# Hugo PublishDir files
