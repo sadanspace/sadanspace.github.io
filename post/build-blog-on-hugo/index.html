@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>使用Hugo &#43; Gihub Pages构建个人Blog - sadanspace&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoqi" /><meta name="description" content="" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.66.0 with theme even" />
+
+
+<link rel="canonical" href="http://localhost:1313/post/build-blog-on-hugo/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="使用Hugo &#43; Gihub Pages构建个人Blog" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/build-blog-on-hugo/" />
+<meta property="article:published_time" content="2020-03-04T22:39:53+08:00" />
+<meta property="article:modified_time" content="2020-03-04T22:39:53+08:00" />
+<meta itemprop="name" content="使用Hugo &#43; Gihub Pages构建个人Blog">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2020-03-04T22:39:53&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-04T22:39:53&#43;08:00" />
+<meta itemprop="wordCount" content="1089">
+
+
+
+<meta itemprop="keywords" content="构建个人博客," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用Hugo &#43; Gihub Pages构建个人Blog"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Sadanspace</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Sadanspace</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">使用Hugo &#43; Gihub Pages构建个人Blog</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%B7%A5%E4%BD%9C/"> 工作 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#step-0-拉取私有仓库公有仓库">Step 0: 拉取私有仓库、公有仓库</a></li>
+    <li><a href="#step-1-安装hugo">Step 1: 安装Hugo</a></li>
+    <li><a href="#step-2-添加主题">Step 2: 添加主题</a></li>
+    <li><a href="#step-3-启动hugo服务">Step 3: 启动Hugo服务</a></li>
+    <li><a href="#step-4-配置静态页面生成目录">Step 4: 配置静态页面生成目录</a></li>
+    <li><a href="#step-5-提交生成静态页面使github-pages域名生效">Step 5: 提交生成静态页面，使GitHub Pages域名生效</a></li>
+    <li><a href="#step-6-添加自动化提交脚本以及提交私有仓库信息">Step 6: 添加自动化提交脚本、以及提交私有仓库信息</a></li>
+    <li><a href="#step-7-整个工作流">Step 7: 整个工作流</a></li>
+    <li><a href="#参考链接">参考链接</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><strong>所需前提条件，你需要先创建两个github仓库:</strong></p>
+<blockquote>
+<p>本文章使用的仓库名为构建该博客的仓库</p>
+</blockquote>
+<ul>
+<li>一个<strong>私有</strong>仓库: 存放hugo配置相关文件</li>
+<li>一个<strong>共有</strong>仓库: 存放hugo生成的静态页面文件</li>
+</ul>
+<h2 id="step-0-拉取私有仓库公有仓库">Step 0: 拉取私有仓库、公有仓库</h2>
+<p>拉取自己的私有仓库（空的，名称不限制）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git clone sadanspace-page-config
+</code></pre></td></tr></table>
+</div>
+</div><p>拉取自己的公有仓库（名称必须符合github page的标准，YOURNAME.github.io)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd sadanspace-page-config
+git clone sadanspace.github.io
+</code></pre></td></tr></table>
+</div>
+</div><p>当前的目录结构如下:</p>
+<ul>
+<li>sadanspace-page-config
+<ul>
+<li>.git</li>
+<li>sadanspace.github.io
+<ul>
+<li>.git</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="step-1-安装hugo">Step 1: 安装Hugo</h2>
+<p>macOS下进行安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">brew install hugo
+</code></pre></td></tr></table>
+</div>
+</div><p>检查是否安装成功(返回正常值即可)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">hugo version
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-2-添加主题">Step 2: 添加主题</h2>
+<p>下载你喜欢的主题到sadanspace-page-config目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd sadanspace-page-config
+git submodule add https://github.com/olOwOlo/hugo-theme-even themes/even
+</code></pre></td></tr></table>
+</div>
+</div><p>将下载主题中的测试案例复制到当前目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cp -R themes/even/exampleSite/ .
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-3-启动hugo服务">Step 3: 启动Hugo服务</h2>
+<p>运行该命令，启动Hugo服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">hugo server 
+</code></pre></td></tr></table>
+</div>
+</div><p>浏览器中访问该地址(http://localhost:1313/)，查看效果</p>
+<p>至此，本地已经可以访问该个人博客了。</p>
+<h2 id="step-4-配置静态页面生成目录">Step 4: 配置静态页面生成目录</h2>
+<p>增加配置文件参数，将hugo生成的静态文件目录名设置为公有仓库名（sadanspace.github.io）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">echo &#34;publishDir = &#39;sadanspace.github.io&#39;&#34; &gt; config.toml
+</code></pre></td></tr></table>
+</div>
+</div><p>在当前目录添加.gitignore配置（私有仓库不存放静态页面文件）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">echo sadanspace.github.io &gt; .gitignore&#34;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-5-提交生成静态页面使github-pages域名生效">Step 5: 提交生成静态页面，使GitHub Pages域名生效</h2>
+<p>在当前目录生成静态页面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">hugo -D
+</code></pre></td></tr></table>
+</div>
+</div><p>进入公有仓库，提交生成的静态页面文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd sadanspace.github.io
+git add .
+git commit -m &#34;first commit&#34;
+git push 
+</code></pre></td></tr></table>
+</div>
+</div><p>此时等几分钟，即可访问sadanspace.github.io</p>
+<h2 id="step-6-添加自动化提交脚本以及提交私有仓库信息">Step 6: 添加自动化提交脚本、以及提交私有仓库信息</h2>
+<p>退回到sadanspace-page-config目录下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd ..
+</code></pre></td></tr></table>
+</div>
+</div><p>添加自动化更新、提交公有仓库数据脚本deploy.sh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#! /bin/sh
+</span><span class="cp"></span><span class="c1"># usage  `deploy.sh &#34;msg&#34;`</span>
+
+<span class="c1"># clone publishDir repo</span>
+git clone https://github.com/sadanspace/sadanspace.github.io.git
+
+<span class="c1"># Build the project</span>
+hugo
+
+<span class="c1"># Go To publishDir</span>
+<span class="nb">cd</span> sadanspace.github.io
+
+<span class="c1"># Add changes to git.</span>
+git add .
+
+<span class="c1"># Commit changes.</span>
+<span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;rebuilding site </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+	<span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span>
+<span class="k">fi</span>
+git commit -m <span class="s2">&#34;</span><span class="nv">$msg</span><span class="s2">&#34;</span>
+
+<span class="c1"># Push source and build repos.</span>
+git push origin master
+</code></pre></td></tr></table>
+</div>
+</div><p>给脚本设置执行权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">chmod +x deploy.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>将当前私有仓库的内容push到github中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git add .
+git commit -m &#34;first commit&#34;
+git push
+</code></pre></td></tr></table>
+</div>
+</div><p>至此完成了整个流程（不包括创建博文）</p>
+<h2 id="step-7-整个工作流">Step 7: 整个工作流</h2>
+<p>在私有仓库目录下（sadanspace-page-config）</p>
+<ul>
+<li>1 创建博客(使用<code>hugo new posts/first-blog.md</code>命令完成)</li>
+<li>2 编写博客</li>
+<li>3 本地重新生成静态页面文件(使用<code>hugo -D</code>命令完成)</li>
+<li>4 更新公有仓库的静态页面文件(使用<code>./deploy.sh &quot;second commit&quot;</code>命令完成)</li>
+<li>5 更新私有仓库的配置文件(此处也可写入脚本)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git add .
+git commit -m &#34;second commit&#34;
+git push
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>6 访问博客(<a href="https://sadanspace.github.io">https://sadanspace.github.io</a>)</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://gohugo.io/getting-started/quick-start/">Hugo官方文档: quick-start</a></li>
+<li><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#readout">Hugo官方文档: hosting-on-github</a></li>
+<li><a href="https://github.com/olOwOlo/hugo-theme-even">Hugo even主题库</a></li>
+</ul>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoqi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-03-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%9E%84%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">构建个人博客</a>
+          </div>
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">sadanspace</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
