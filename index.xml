@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>JVM、JVM规范、JVM实现是什么关系？</title>
+      <link>http://localhost:1313/post/jvm-jvms-jvmi/</link>
+      <pubDate>Sun, 26 Apr 2020 15:21:18 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/jvm-jvms-jvmi/</guid>
+      <description>什么是JVM? JVM，Java Virtual Machine的英文缩写。是一个可以运行Java字节码的虚拟机应用程序。 此处的JVM指的就是JVM实现 JVM</description>
+    </item>
+    
+    <item>
       <title>使用Hugo &#43; Github Pages构建个人Blog</title>
       <link>http://localhost:1313/post/build-blog-on-hugo/</link>
       <pubDate>Wed, 04 Mar 2020 22:39:53 +0800</pubDate>

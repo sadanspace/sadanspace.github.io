@@ -10,34 +10,48 @@
   
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2020-03-04T22:39:53+08:00</lastmod>
+    <lastmod>2020-04-26T15:21:18+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/jvm/</loc>
+    <lastmod>2020-04-26T15:21:18+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/post/jvm-jvms-jvmi/</loc>
+    <lastmod>2020-04-26T15:21:18+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2020-03-04T22:39:53+08:00</lastmod>
+    <lastmod>2020-04-26T15:21:18+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2020-03-04T22:39:53+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://localhost:1313/post/build-blog-on-hugo/</loc>
-    <lastmod>2020-03-04T22:39:53+08:00</lastmod>
+    <lastmod>2020-04-26T15:21:18+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://localhost:1313/categories/%E5%B7%A5%E4%BD%9C/</loc>
+    <lastmod>2020-04-26T15:21:18+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/post/build-blog-on-hugo/</loc>
     <lastmod>2020-03-04T22:39:53+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

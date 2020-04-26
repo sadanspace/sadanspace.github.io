@@ -6,10 +6,19 @@
     <description>Recent content in 工作 on sadanspace&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 04 Mar 2020 22:39:53 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2020 15:21:18 +0800</lastBuildDate>
     
 	<atom:link href="http://localhost:1313/categories/%E5%B7%A5%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JVM、JVM规范、JVM实现是什么关系？</title>
+      <link>http://localhost:1313/post/jvm-jvms-jvmi/</link>
+      <pubDate>Sun, 26 Apr 2020 15:21:18 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/jvm-jvms-jvmi/</guid>
+      <description>什么是JVM? JVM，Java Virtual Machine的英文缩写。是一个可以运行Java字节码的虚拟机应用程序。 此处的JVM指的就是JVM实现 JVM</description>
+    </item>
     
     <item>
       <title>使用Hugo &#43; Github Pages构建个人Blog</title>
