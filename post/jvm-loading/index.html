@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>class加载过程中的第一个阶段——加载(Loading) - sadanspace&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoqi" /><meta name="description" content="对于JVM而言，拿来运行的就是class格式的字节码，例如X.class文件。 在JVM中，把一个符合JVM规范的class字节码加载到内存中" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.66.0 with theme even" />
+
+
+<link rel="canonical" href="https://sadanspace.github.io/post/jvm-loading/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="https://sadanspace.github.io/sass/main.min.03c82d55deca284e436ab47675880e65003988fe6efe54fa0dd1fc7497f76d79.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="class加载过程中的第一个阶段——加载(Loading)" />
+<meta property="og:description" content="对于JVM而言，拿来运行的就是class格式的字节码，例如X.class文件。 在JVM中，把一个符合JVM规范的class字节码加载到内存中" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sadanspace.github.io/post/jvm-loading/" />
+<meta property="article:published_time" content="2020-05-05T11:42:27+08:00" />
+<meta property="article:modified_time" content="2020-05-05T11:42:27+08:00" />
+<meta itemprop="name" content="class加载过程中的第一个阶段——加载(Loading)">
+<meta itemprop="description" content="对于JVM而言，拿来运行的就是class格式的字节码，例如X.class文件。 在JVM中，把一个符合JVM规范的class字节码加载到内存中">
+<meta itemprop="datePublished" content="2020-05-05T11:42:27&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-05T11:42:27&#43;08:00" />
+<meta itemprop="wordCount" content="2214">
+
+
+
+<meta itemprop="keywords" content="JVM," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="class加载过程中的第一个阶段——加载(Loading)"/>
+<meta name="twitter:description" content="对于JVM而言，拿来运行的就是class格式的字节码，例如X.class文件。 在JVM中，把一个符合JVM规范的class字节码加载到内存中"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Sadanspace</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Sadanspace</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">class加载过程中的第一个阶段——加载(Loading)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-05 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%B7%A5%E4%BD%9C/"> 工作 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#类的生命周期">类的生命周期</a></li>
+    <li><a href="#loading过程">Loading过程</a>
+      <ul>
+        <li><a href="#classloader">ClassLoader</a></li>
+        <li><a href="#loadclass">loadClass</a></li>
+        <li><a href="#findclass">findClass</a></li>
+        <li><a href="#总览图">总览图</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>对于JVM而言，拿来运行的就是class格式的字节码，例如X.class文件。</p>
+<p>在JVM中，把一个符合JVM规范的class字节码加载到内存中，最终转换成能被Java程序所使用的情况，这整个过程</p>
+<p>称之为类加载的过程。</p>
+<h2 id="类的生命周期">类的生命周期</h2>
+<p>一个class字节码被加载到JVM内存，到卸载出JVM内存为止，会经历以下的几个阶段。</p>
+<p><img src="/_image/class-full-lifecircle.png" alt="class-full-lifecircle"></p>
+<p>包括：加载(Loading)、验证(Verification)、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)、卸载(Unloading)。</p>
+<p>其中类加载过程包括前五个阶段，而验证(Verification)、准备(Preparation)、解析(Resolution)三个阶段被统称为Linking阶段。</p>
+<p>这个图中所指的执行顺序，只表示每个阶段开始的执行顺序，因为他们之间不是完全串行的方式运行。</p>
+<p>本文只说明Loading的过程。</p>
+<h2 id="loading过程">Loading过程</h2>
+<p>class的Loading过程分为以下三个步骤</p>
+<blockquote>
+<p>1 通过一个类的完全限定名来找到此类的class格式的二进制字节流</p>
+<p>2 将这个字节流数据转换为JVM中方法区的运行时数据</p>
+<p>3 在堆内存中生成一个代表这个字节流的java.lang.Class类的对象，作为Java程序访问方法区中的字节流数据的接口。</p>
+</blockquote>
+<p>使用Java代码来直接理解Loading过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.example</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">sun.misc.Launcher</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">T</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Launcher</span><span class="o">.</span><span class="na">getLauncher</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">loadClass</span><span class="o">(</span><span class="s">&#34;com.example.T&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">aClass</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上述代码中有两个重要的成分，ClassLoader对象（<code>getClassLoader</code>方法获取的）和loadClass方法（ClassLoader对象的方法），这两个部分是完成Loading过程的核心成分。</p>
+<h3 id="classloader">ClassLoader</h3>
+<p>ClassLoader对象是专门用来完成class字节码加载操作的对象，在JVM的规范中只定义了两种ClassLoader，一种是C++实现的BootstrapClassLoader，另一种则是其它的ClassLoader（Java语言实现的）。</p>
+<p>而在Java 8之前（包括8），对于Java的使用者来说，有四类ClassLoader，如下图所示：</p>
+<p><img src="/_image/classloader-types.png" alt="classloader-types"></p>
+<p>Bootstrap ClassLoader类是由C++实现，所以Java中没有与之对应的类（即，在Java SE源码中搜索不到BootClassLoader的类，所以在Java中获得该ClassLoader对象是会返回null）。</p>
+<p>而ExtClassLoader和AppClassLoader是<code>sun.misc.Launcher</code>类中的内部类，这些都是Java SE自带的ClassLoader。</p>
+<p>还有一种是可以让用户自定义的ClassLoader类。</p>
+<p>它们之间的关系是上下层的关系，顺序按从下至上排序如下。</p>
+<p><img src="/_image/classloader-levels.png" alt="classloader-levels"></p>
+<blockquote>
+<p>User-define ClassLoader -&gt; App ClassLoader -&gt; Ext ClassLoader -&gt; Bootstrap ClassLoader</p>
+</blockquote>
+<h3 id="loadclass">loadClass</h3>
+<p>ClassLoader对象中loadClass方法是用来完成整个Loading过程的。所以要搞清楚Loading过程，就是要搞清楚loadClass方法中做了什么。</p>
+<p>通过IDE工具，点击上述代码中的loadClass方法，直接跳转到<code>java.lang.ClassLoader</code>类中，可以找到具体的</p>
+<p>loadClass方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">loadClass</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">resolve</span><span class="o">)</span>
+        <span class="kd">throws</span> <span class="n">ClassNotFoundException</span>
+    <span class="o">{</span>
+        <span class="kd">synchronized</span> <span class="o">(</span><span class="n">getClassLoadingLock</span><span class="o">(</span><span class="n">name</span><span class="o">))</span> <span class="o">{</span>
+            <span class="c1">// First, check if the class has already been loaded
+</span><span class="c1"></span>            <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">findLoadedClass</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">long</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">parent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">c</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">loadClass</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">c</span> <span class="o">=</span> <span class="n">findBootstrapClassOrNull</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// ClassNotFoundException thrown if class not found
+</span><span class="c1"></span>                    <span class="c1">// from the non-null parent class loader
+</span><span class="c1"></span>                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// If still not found, then invoke findClass in order
+</span><span class="c1"></span>                    <span class="c1">// to find the class.
+</span><span class="c1"></span>                    <span class="kt">long</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+                    <span class="n">c</span> <span class="o">=</span> <span class="n">findClass</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+
+                    <span class="c1">// this is the defining class loader; record the stats
+</span><span class="c1"></span>                    <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">PerfCounter</span><span class="o">.</span><span class="na">getParentDelegationTime</span><span class="o">().</span><span class="na">addTime</span><span class="o">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="o">);</span>
+                    <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">PerfCounter</span><span class="o">.</span><span class="na">getFindClassTime</span><span class="o">().</span><span class="na">addElapsedTimeFrom</span><span class="o">(</span><span class="n">t1</span><span class="o">);</span>
+                    <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">PerfCounter</span><span class="o">.</span><span class="na">getFindClasses</span><span class="o">().</span><span class="na">increment</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">resolve</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">resolveClass</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该方法的大体流程如下：</p>
+<blockquote>
+<p>当前类加载器首先查看自己是否已经加载过，检查自己的缓存，没找到的情况下会去调用其父类加载器，父类加载器也是同样的操作流程。</p>
+</blockquote>
+<blockquote>
+<p>直到最顶层的Bootstrap ClassLoader，依然没有在其缓存中找到。</p>
+<p>就会从上至下进行实际的加载操作，即上述代码中的findClass方法。</p>
+<p>父类加载器会在自己的搜索范围内进行搜索，搜索到则返回结果。没搜索到则让子类加载器去搜索。直到最底层的类加载器，如果还没搜索到，则会抛出ClassNotFound的异常。</p>
+</blockquote>
+<p>该方法的执行机制也称之为<strong>双亲委派机制</strong>，是Java默认的Loading策略。</p>
+<h3 id="findclass">findClass</h3>
+<p>loadClass方法使用了<strong>模板方法模式</strong>，将整个类加载机制的流程统一，具体如何找到class字节码的位置，以及如何生成与之对应的<code>java.lang.Class</code>对象都是在findClass方法中实现。</p>
+<p>以AppClassLoader的findClass为目标，可以找到其父类URLClassLoader的findClass实现，代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">findClass</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span>
+        <span class="kd">throws</span> <span class="n">ClassNotFoundException</span>
+    <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">result</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">AccessController</span><span class="o">.</span><span class="na">doPrivileged</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">PrivilegedExceptionAction</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;()</span> <span class="o">{</span>
+                    <span class="kd">public</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">run</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
+                        <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="sc">&#39;.&#39;</span><span class="o">,</span> <span class="sc">&#39;/&#39;</span><span class="o">).</span><span class="na">concat</span><span class="o">(</span><span class="s">&#34;.class&#34;</span><span class="o">);</span>
+                        <span class="n">Resource</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ucp</span><span class="o">.</span><span class="na">getResource</span><span class="o">(</span><span class="n">path</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>  <span class="c1">// 基于class文件的路径，获取class字节流对象
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="o">(</span><span class="n">res</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">try</span> <span class="o">{</span>
+                                <span class="k">return</span> <span class="n">defineClass</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>   <span class="c1">// 根据完全限定名以及对应的class字节流对象生成Class对象
+</span><span class="c1"></span>                            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="k">throw</span> <span class="k">new</span> <span class="n">ClassNotFoundException</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+                            <span class="o">}</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">},</span> <span class="n">acc</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">PrivilegedActionException</span> <span class="n">pae</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="o">(</span><span class="n">ClassNotFoundException</span><span class="o">)</span> <span class="n">pae</span><span class="o">.</span><span class="na">getException</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">ClassNotFoundException</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>以上代码的流程很清晰。</p>
+<blockquote>
+<p>1 将完全限定名转换成路径名，并通过该路径查找到对应的class文件，生成class字节流对象。</p>
+<p>2 基于完全限定名和class字节流对象生成对应的java.lang.Class对象。</p>
+</blockquote>
+<p>以上便是整个Loading过程的具体细节。</p>
+<h3 id="总览图">总览图</h3>
+<p><img src="/_image/class-loading-procedure.png" alt="class-loading-procedure"></p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li>《深入理解Java虚拟机第三版》</li>
+<li>《jvms8》</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoqi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-05
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/jvm/">JVM</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/jvm-jvms-jvmi/">
+            <span class="next-text nav-default">JVM、JVM规范、JVM实现是什么关系？</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://sadanspace.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">sadanspace</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="https://sadanspace.github.io/js/main.4d21c1cefdf1cd0b77ef59bab2d1bbe3112fc9d6cc04710bb1f0b1fd7b891f11.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

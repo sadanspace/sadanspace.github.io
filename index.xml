@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>class加载过程中的第一个阶段——加载(Loading)</title>
+      <link>https://sadanspace.github.io/post/jvm-loading/</link>
+      <pubDate>Tue, 05 May 2020 11:42:27 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/jvm-loading/</guid>
+      <description>对于JVM而言，拿来运行的就是class格式的字节码，例如X.class文件。 在JVM中，把一个符合JVM规范的class字节码加载到内存中</description>
+    </item>
+    
+    <item>
       <title>JVM、JVM规范、JVM实现是什么关系？</title>
       <link>https://sadanspace.github.io/post/jvm-jvms-jvmi/</link>
       <pubDate>Sun, 26 Apr 2020 15:21:18 +0800</pubDate>
