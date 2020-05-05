@@ -157,7 +157,7 @@
 <p>称之为类加载的过程。</p>
 <h2 id="类的生命周期">类的生命周期</h2>
 <p>一个class字节码被加载到JVM内存，到卸载出JVM内存为止，会经历以下的几个阶段。</p>
-<p><img src="/_image/class-full-lifecircle.png" alt="class-full-lifecircle"></p>
+<p><img src="https://raw.githubusercontent.com/sadanspace/sadanspace.github.io/master/_image/class-full-lifecircle.png" alt="class-full-lifecircle"></p>
 <p>包括：加载(Loading)、验证(Verification)、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)、卸载(Unloading)。</p>
 <p>其中类加载过程包括前五个阶段，而验证(Verification)、准备(Preparation)、解析(Resolution)三个阶段被统称为Linking阶段。</p>
 <p>这个图中所指的执行顺序，只表示每个阶段开始的执行顺序，因为他们之间不是完全串行的方式运行。</p>
@@ -200,12 +200,12 @@
 <h3 id="classloader">ClassLoader</h3>
 <p>ClassLoader对象是专门用来完成class字节码加载操作的对象，在JVM的规范中只定义了两种ClassLoader，一种是C++实现的BootstrapClassLoader，另一种则是其它的ClassLoader（Java语言实现的）。</p>
 <p>而在Java 8之前（包括8），对于Java的使用者来说，有四类ClassLoader，如下图所示：</p>
-<p><img src="/_image/classloader-types.png" alt="classloader-types"></p>
+<p><img src="https://raw.githubusercontent.com/sadanspace/sadanspace.github.io/master/_image/classloader-types.png" alt="classloader-types"></p>
 <p>Bootstrap ClassLoader类是由C++实现，所以Java中没有与之对应的类（即，在Java SE源码中搜索不到BootClassLoader的类，所以在Java中获得该ClassLoader对象是会返回null）。</p>
 <p>而ExtClassLoader和AppClassLoader是<code>sun.misc.Launcher</code>类中的内部类，这些都是Java SE自带的ClassLoader。</p>
 <p>还有一种是可以让用户自定义的ClassLoader类。</p>
 <p>它们之间的关系是上下层的关系，顺序按从下至上排序如下。</p>
-<p><img src="/_image/classloader-levels.png" alt="classloader-levels"></p>
+<p><img src="https://raw.githubusercontent.com/sadanspace/sadanspace.github.io/master/_image/classloader-levels.png" alt="classloader-levels"></p>
 <blockquote>
 <p>User-define ClassLoader -&gt; App ClassLoader -&gt; Ext ClassLoader -&gt; Bootstrap ClassLoader</p>
 </blockquote>
@@ -377,7 +377,7 @@
 </blockquote>
 <p>以上便是整个Loading过程的具体细节。</p>
 <h3 id="总览图">总览图</h3>
-<p><img src="/_image/class-loading-procedure.png" alt="class-loading-procedure"></p>
+<p><img src="https://raw.githubusercontent.com/sadanspace/sadanspace.github.io/master/_image/class-loading-procedure.png" alt="class-loading-procedure"></p>
 <p><strong>参考资料</strong></p>
 <ul>
 <li>《深入理解Java虚拟机第三版》</li>
