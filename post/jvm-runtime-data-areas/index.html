@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JVM进程所使用的内存区域简述 - sadanspace&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoqi" /><meta name="description" content="​ ​ JVM进程所能使用的内存空间包括两大部分，分别是直接内存（Directory Memory；或堆外内存off-heap）、运行时数据区（J" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.66.0 with theme even" />
+
+
+<link rel="canonical" href="https://sadanspace.github.io/post/jvm-runtime-data-areas/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="https://sadanspace.github.io/sass/main.min.03c82d55deca284e436ab47675880e65003988fe6efe54fa0dd1fc7497f76d79.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="JVM进程所使用的内存区域简述" />
+<meta property="og:description" content="​ ​ JVM进程所能使用的内存空间包括两大部分，分别是直接内存（Directory Memory；或堆外内存off-heap）、运行时数据区（J" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sadanspace.github.io/post/jvm-runtime-data-areas/" />
+<meta property="article:published_time" content="2020-05-17T11:42:27+08:00" />
+<meta property="article:modified_time" content="2020-05-17T11:42:27+08:00" />
+<meta itemprop="name" content="JVM进程所使用的内存区域简述">
+<meta itemprop="description" content="​ ​ JVM进程所能使用的内存空间包括两大部分，分别是直接内存（Directory Memory；或堆外内存off-heap）、运行时数据区（J">
+<meta itemprop="datePublished" content="2020-05-17T11:42:27&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-17T11:42:27&#43;08:00" />
+<meta itemprop="wordCount" content="2115">
+
+
+
+<meta itemprop="keywords" content="JVM," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JVM进程所使用的内存区域简述"/>
+<meta name="twitter:description" content="​ ​ JVM进程所能使用的内存空间包括两大部分，分别是直接内存（Directory Memory；或堆外内存off-heap）、运行时数据区（J"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Sadanspace</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Sadanspace</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JVM进程所使用的内存区域简述</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-17 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%B7%A5%E4%BD%9C/"> 工作 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#运行时数据区run-time-data-areas">运行时数据区（Run-Time Data Areas）</a>
+      <ul>
+        <li><a href="#程序计数器the-pc-register">程序计数器（The pc <strong>Register）</strong></a></li>
+        <li><a href="#栈-java-virtual-machine-stacks">栈（ Java Virtual Machine Stacks）</a></li>
+        <li><a href="#堆heap">堆（Heap）</a></li>
+        <li><a href="#方法区-method-area">方法区（ Method Area）</a></li>
+        <li><a href="#运行时常量区-run-time-constant-pool">运行时常量区（ Run-Time Constant Pool）</a></li>
+        <li><a href="#本地方法栈-native-method-stacks">本地方法栈（ Native Method Stacks）</a></li>
+      </ul>
+    </li>
+    <li><a href="#直接内存direct-memeory">直接内存（Direct Memeory）</a></li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#参考资料">参考资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>​	​	JVM进程所能使用的内存空间包括两大部分，分别是<strong>直接内存</strong>（Directory Memory；或堆外内存off-heap）、<strong>运行时数据区</strong>（JVM规范中定义的内存区域）。</p>
+<p>​	了解其所使用的内存分布，以及每个区域的作用、产生的异常等信息，在遇到错误时，可以更加深入的排除问题所在。</p>
+<h2 id="运行时数据区run-time-data-areas">运行时数据区（Run-Time Data Areas）</h2>
+<p>​	JVM进程运行时会使用多种运行时数据区域。</p>
+<ul>
+<li>
+<p>所有数据区域的生命周期和JVM进程的生命周期一致（数据区域创建于JVM进程启动，销毁于JVM进程退出）</p>
+</li>
+<li>
+<p>有些数据区的生命周期是和JVM进程中的线程生命周期一致（这些数据区域创建于线程创建，销毁于线程退出），因此有些数据区域是线程共享的（thread shared），有些数据区域是线程私有的（thread private）。</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sadanspace/sadanspace.github.io/master/_image/jvm-runtime-data-area.png" alt="Run-Time Data Areas"></p>
+<h3 id="程序计数器the-pc-register">程序计数器（The pc <strong>Register）</strong></h3>
+<p>​	程序计数器，专门用来记录当前线程正在执行的JVM指令所在位置。由于JVM进程支持多线程，所以会有线程切换的操作。为了在下次切换到当前线程时，还能从上次切换前的位置继续执行，因此需要保存正确的执行位置。而那些位置数据所存放的地方就是程序计数器中。</p>
+<p>​	JVM规范中的信息：</p>
+<ul>
+<li>在任何时候，JVM线程都在执行一个方法中的指令，即该线程的当前方法。</li>
+<li>如果当前方法不是本地方法（Native Method），则程序计数器会存储正在执行的JVM指令地址。
+如果是本地方法，则程序计数器保存值为undefined。</li>
+</ul>
+<p>该数据区域没有被规定抛出OutOfMemoryError异常的情况（可能是这块数据区域所需容量少且固定）。</p>
+<h3 id="栈-java-virtual-machine-stacks">栈（ Java Virtual Machine Stacks）</h3>
+<p>​	JVM栈，JVM线程运行非本地方法时（例如Java方法），所使用的内存空间。该栈中的元素称为帧（frame）。每个栈帧中包含局部变量表、操作数栈、动态连接、方法出口等信息。线程私有。</p>
+<p>​	JVM规范中的信息：</p>
+<ul>
+<li>由于JVM栈除了push和pop frame外，从不直接操作JVM栈，所以frame可能是由heap分配的。</li>
+<li>如果一个线程计算所需的JVM Stack大小超出允许范围，则JVM进程会抛出<strong>StackOverflowError</strong>异常。</li>
+<li>如果一个JVM stack可以动态扩展大小，那么当需要扩展时，内存不够扩展，则JVM进程会抛出<strong>OutOfMemoryError</strong>异常。</li>
+</ul>
+<h3 id="堆heap">堆（Heap）</h3>
+<p>​	堆，包含所有class的实例和数组的分配。所有线程共享的区域。</p>
+<p>​	JVM规范中的信息：</p>
+<ul>
+<li>
+<p>存储在堆中的对象由自动存储管理系统回收（即GC，垃圾收集器），对象从不显示的重新分配。</p>
+</li>
+<li>
+<p>JVM假定没有特定类型的自动存储管理系统，因此存储管理技术可以根据实现者的系统需求来选择。</p>
+</li>
+<li>
+<p>如果一个计算需要的堆内存大小超出自动管理系统所能使用的大小，则JVM进程会抛出<strong>OutOfMemoryError</strong>异常。</p>
+</li>
+</ul>
+<h3 id="方法区-method-area">方法区（ Method Area）</h3>
+<p>​	方法区，用于存放class字节码中的信息。包括class中的常量池、字段、方法和构造方法中的JVM指令等信息。</p>
+<p>​	JVM规范中的信息：</p>
+<ul>
+<li>
+<p>虽然方法区在逻辑上是堆的一部分，但简单的实现可以选择不对其进行垃圾回收或压缩。本规范没有规定方法区的位置或用于管理编译后的代码的策略。
+（表示JVM进程在实现该内存区域时的位置，更加自由；该区域是否回收内存也可以自由选择）</p>
+</li>
+<li>
+<p>如果方法区内存不够，则JVM进程会抛出<strong>OutOfMemoryError</strong>异常。</p>
+</li>
+</ul>
+<h3 id="运行时常量区-run-time-constant-pool">运行时常量区（ Run-Time Constant Pool）</h3>
+<p>​	运行时常量区，即在方法区中存放的class字节码的部分数据，包含各种类型的常量，存放class大量信息。</p>
+<p>​	JVM规范中定义产生异常的情况如下：</p>
+<ul>
+<li>如果当创建一个Class或Interface时，导致方法区内存不够使用，则JVM进程会抛出<strong>OutOfMemoryError</strong>异常。</li>
+</ul>
+<h3 id="本地方法栈-native-method-stacks">本地方法栈（ Native Method Stacks）</h3>
+<p>​	本地方法栈，也就是给本地方法运行时所用的内存空间。对于Hotspot而言，就是C或C++程序运行方法时，
+所用的内存空间。该空间是内存私有的。</p>
+<p>​	JVM规范中定义产生异常的情况如下：</p>
+<ul>
+<li>如果一个线程使用本地方法时，所需内存空间超出本地方法栈所剩空间大小，则JVM进程会抛出<strong>StackOverflowError</strong>异常。</li>
+<li>如果本地方法栈可以动态扩展。当其尝试扩展时，内存不足；或者在为一个新线程创建新的方法栈时，内存不足。则JVM进程抛出<strong>OutOfMemoryError</strong>异常。</li>
+</ul>
+<h2 id="直接内存direct-memeory">直接内存（Direct Memeory）</h2>
+<p>​	此处的直接内存指的是，JVM进程运行时数据区之外的物理内存。也称之为堆外内存（off-heap）。该内存区域不在JVM规范中定义，但JVM进程也会经常使用。
+​	比如可以使用UnSafe包中的freeMemory方法直接分配堆外内存，或者使用JDK1.4之后的NIO类，同样可以直接使用堆外内存。</p>
+<p>​	JVM规范中定义产生异常的情况如下：</p>
+<ul>
+<li>当JVM进程要使用直接内存时，如果此时直接内存的空间不够使用，同样会产生<strong>OutOfMemoryError</strong>异常。</li>
+</ul>
+<h2 id="总结">总结</h2>
+<ul>
+<li>内存区域关系图</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sadanspace/sadanspace.github.io/master/_image/jvm-runtime-data-area-full.png" alt="Run-Time Data Areas"></p>
+<ul>
+<li>内存区域异常关系表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>StackOverflowError</strong></th>
+<th><strong>OutOfMemoryError</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The pc Register</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Java Virtual Machine Stacks</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Heap</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Method Area（Run-Time Constant Pool）</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Native Method Stacks</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Direct Memory</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料">参考资料</h3>
+<p>《深入理解Java虚拟机》2.2</p>
+<p>《The Java® Virtual Machine Specification<em>Java SE 8 Edition</em>》2.5</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoqi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/jvm/">JVM</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/jvm-loading/">
+            <span class="next-text nav-default">class加载过程中的第一个阶段——加载(Loading)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://sadanspace.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">sadanspace</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="https://sadanspace.github.io/js/main.4d21c1cefdf1cd0b77ef59bab2d1bbe3112fc9d6cc04710bb1f0b1fd7b891f11.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

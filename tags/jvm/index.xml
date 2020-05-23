@@ -6,10 +6,19 @@
     <description>Recent content in JVM on sadanspace&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 05 May 2020 11:42:27 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2020 11:42:27 +0800</lastBuildDate>
     
 	<atom:link href="https://sadanspace.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JVM进程所使用的内存区域简述</title>
+      <link>https://sadanspace.github.io/post/jvm-runtime-data-areas/</link>
+      <pubDate>Sun, 17 May 2020 11:42:27 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/jvm-runtime-data-areas/</guid>
+      <description>​ ​ JVM进程所能使用的内存空间包括两大部分，分别是直接内存（Directory Memory；或堆外内存off-heap）、运行时数据区（J</description>
+    </item>
     
     <item>
       <title>class加载过程中的第一个阶段——加载(Loading)</title>
