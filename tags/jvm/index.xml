@@ -6,10 +6,19 @@
     <description>Recent content in JVM on sadanspace&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 17 May 2020 11:42:27 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 15:21:18 +0800</lastBuildDate>
     
 	<atom:link href="https://sadanspace.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JVM中类的加载过程和对象的创建过程之间的差别</title>
+      <link>https://sadanspace.github.io/post/jvm-class-instance-create/</link>
+      <pubDate>Sun, 24 May 2020 15:21:18 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/jvm-class-instance-create/</guid>
+      <description>我对JVM类加载过程中的Initailization过程和对象创建过程的错误理解 ​ 最初学习这两个过程的时候，自己就没有完全分清楚，老是觉得这</description>
+    </item>
     
     <item>
       <title>JVM进程所使用的内存区域简述</title>
