@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>微服务 on sadanspace&#39;s blog</title>
+    <link>https://sadanspace.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</link>
+    <description>Recent content in 微服务 on sadanspace&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 15 Jun 2020 22:39:53 +0800</lastBuildDate>
+    
+	<atom:link href="https://sadanspace.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>概念：客户端负载均衡和服务端负载均衡</title>
+      <link>https://sadanspace.github.io/post/client-side-vs-server-side-load-balance/</link>
+      <pubDate>Mon, 15 Jun 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/client-side-vs-server-side-load-balance/</guid>
+      <description>客户端负载均衡、服务端负载均衡是什么？ 我是这样理解这两个概念的，负载均衡是一个功能，所以字面意思理解这两个概念就是 在客户端内实现负载均衡功能</description>
+    </item>
+    
+  </channel>
+</rss>

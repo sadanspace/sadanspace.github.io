@@ -6,10 +6,19 @@
     <description>Recent content in 工作 on sadanspace&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jun 2020 12:46:27 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2020 22:39:53 +0800</lastBuildDate>
     
 	<atom:link href="https://sadanspace.github.io/categories/%E5%B7%A5%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>概念：客户端负载均衡和服务端负载均衡</title>
+      <link>https://sadanspace.github.io/post/client-side-vs-server-side-load-balance/</link>
+      <pubDate>Mon, 15 Jun 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/client-side-vs-server-side-load-balance/</guid>
+      <description>客户端负载均衡、服务端负载均衡是什么？ 我是这样理解这两个概念的，负载均衡是一个功能，所以字面意思理解这两个概念就是 在客户端内实现负载均衡功能</description>
+    </item>
     
     <item>
       <title>什么是编程范式？</title>
@@ -63,6 +72,33 @@
       
       <guid>https://sadanspace.github.io/post/build-blog-on-hugo/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Nginx配置</title>
+      <link>https://sadanspace.github.io/post/nginx%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 27 Feb 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/nginx%E9%85%8D%E7%BD%AE/</guid>
+      <description>Nginx 指令 try_files 类似与nginx rewrite指令 语法规则：try_files file &amp;hellip; uri; 功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最</description>
+    </item>
+    
+    <item>
+      <title>Docker最佳实践</title>
+      <link>https://sadanspace.github.io/post/dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Thu, 20 Feb 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1.使用.dockerignore文件，减少在构建Docker镜像时的不必要文件 2.docker build [OPTIONS] -的使用 -表示使用标准输入的数据来构建镜像，而不是使用</description>
+    </item>
+    
+    <item>
+      <title>面向对象学习-大纲</title>
+      <link>https://sadanspace.github.io/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AD%A6%E4%B9%A0-%E5%A4%A7%E7%BA%B2/</link>
+      <pubDate>Thu, 13 Feb 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AD%A6%E4%B9%A0-%E5%A4%A7%E7%BA%B2/</guid>
+      <description>面向对象程序设计是什么？ 面向对象程序设计（英文: Object-Oriented Programming， 简称OOP），是一种有对象概念的程序编程范式。 ”编程范式“（英文：</description>
     </item>
     
   </channel>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Nginx配置 - sadanspace&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoqi" /><meta name="description" content="Nginx 指令 try_files 类似与nginx rewrite指令 语法规则：try_files file &amp;hellip; uri; 功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.66.0 with theme even" />
+
+
+<link rel="canonical" href="https://sadanspace.github.io/post/nginx%E9%85%8D%E7%BD%AE/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="https://sadanspace.github.io/sass/main.min.03c82d55deca284e436ab47675880e65003988fe6efe54fa0dd1fc7497f76d79.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Nginx配置" />
+<meta property="og:description" content="Nginx 指令 try_files 类似与nginx rewrite指令 语法规则：try_files file &hellip; uri; 功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sadanspace.github.io/post/nginx%E9%85%8D%E7%BD%AE/" />
+<meta property="article:published_time" content="2020-02-27T22:39:53+08:00" />
+<meta property="article:modified_time" content="2020-02-27T22:39:53+08:00" />
+<meta itemprop="name" content="Nginx配置">
+<meta itemprop="description" content="Nginx 指令 try_files 类似与nginx rewrite指令 语法规则：try_files file &hellip; uri; 功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最">
+<meta itemprop="datePublished" content="2020-02-27T22:39:53&#43;08:00" />
+<meta itemprop="dateModified" content="2020-02-27T22:39:53&#43;08:00" />
+<meta itemprop="wordCount" content="594">
+
+
+
+<meta itemprop="keywords" content="使用技巧（tips）," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nginx配置"/>
+<meta name="twitter:description" content="Nginx 指令 try_files 类似与nginx rewrite指令 语法规则：try_files file &hellip; uri; 功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Sadanspace</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Sadanspace</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Nginx配置</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-02-27 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%B7%A5%E4%BD%9C/"> 工作 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#nginx-指令-try_files">Nginx 指令 try_files</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="nginx-指令-try_files">Nginx 指令 try_files</h3>
+<blockquote>
+<p>类似与nginx rewrite指令</p>
+</blockquote>
+<blockquote>
+<p>语法规则：try_files file &hellip; uri;
+功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最后一个参数才能进行跳转。
+（内部跳转，就是在nginx内部的location中进行重新匹配，而不是让客户端发起新的http请求）</p>
+</blockquote>
+<p>示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># nginx配置示例
+# 已知条件 /data/shop是目录、其目录下只有index.html文件
+
+location /shop {
+	root /data;
+	index index.html;
+	try_files $uri /shop/index.html;
+}
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><strong>简单描述上述配置的作用，凡是访问该域名下, 以/shop开头（包括自身）的URI，请求的URI的结果都是/shop/index.html。</strong>
+$uri表示请求的uri字符串，例如：<code>www.x.com/a/b</code>，uri则是/a/b。</p>
+</blockquote>
+<ol>
+<li>基于现在的配置，访问<code>www.abc.com/shop</code>, 得到的uri则是/shop，而/shop是目录，在不指定访问文件时，默认访问index.html。</li>
+<li>因此映射到服务器，就是寻找/data/shop/index.html文件，如果不存在，则在nginx内部location中，以/shop/index.html为uri进行重新访问，最终找不到返回404页面文件。</li>
+<li>所以如果访问<code>www.abc.com/shop/zzz</code>，所映射到服务器的路径则是/data/shop/zzz，如果存在，直接返回；否则返回/data/shop/index.html文件。</li>
+</ol>
+<p>结果就是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">www.abc.com/shop* -&gt; www.abc.com/shop/index.html
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoqi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-02-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7tips/">使用技巧（tips）</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/build-blog-on-hugo/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">使用Hugo &#43; Github Pages构建个人Blog</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+            <span class="next-text nav-default">Docker最佳实践</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/nginx%E9%85%8D%E7%BD%AE/" class="leancloud_visitors" data-flag-title="Nginx配置">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'QyVB819JGwgnQ6CtiygBhdlF-gzGzoHsz',
+        appKey: 'X72uxlC3OEIbbDL2c5THfB2o',
+        notify:  false ,
+        verify:  false ,
+        avatar:'mm',
+        placeholder: '说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://sadanspace.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">sadanspace</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="https://sadanspace.github.io/js/main.4d21c1cefdf1cd0b77ef59bab2d1bbe3112fc9d6cc04710bb1f0b1fd7b891f11.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>使用技巧（tips） on sadanspace&#39;s blog</title>
+    <link>https://sadanspace.github.io/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7tips/</link>
+    <description>Recent content in 使用技巧（tips） on sadanspace&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 27 Feb 2020 22:39:53 +0800</lastBuildDate>
+    
+	<atom:link href="https://sadanspace.github.io/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7tips/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Nginx配置</title>
+      <link>https://sadanspace.github.io/post/nginx%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 27 Feb 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/nginx%E9%85%8D%E7%BD%AE/</guid>
+      <description>Nginx 指令 try_files 类似与nginx rewrite指令 语法规则：try_files file &amp;hellip; uri; 功能，寻找指定文件，如果找不到，则内部跳转至指定的uri，只有最</description>
+    </item>
+    
+    <item>
+      <title>Docker最佳实践</title>
+      <link>https://sadanspace.github.io/post/dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Thu, 20 Feb 2020 22:39:53 +0800</pubDate>
+      
+      <guid>https://sadanspace.github.io/post/dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1.使用.dockerignore文件，减少在构建Docker镜像时的不必要文件 2.docker build [OPTIONS] -的使用 -表示使用标准输入的数据来构建镜像，而不是使用</description>
+    </item>
+    
+  </channel>
+</rss>
