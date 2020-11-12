@@ -6,11 +6,7 @@
     <description>Recent content in Posts on sadanspace&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 15 Jun 2020 22:39:53 +0800</lastBuildDate>
-    
-	<atom:link href="https://sadanspace.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 15 Jun 2020 22:39:53 +0800</lastBuildDate><atom:link href="https://sadanspace.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>概念：客户端负载均衡和服务端负载均衡</title>
       <link>https://sadanspace.github.io/post/client-side-vs-server-side-load-balance/</link>
@@ -125,7 +121,7 @@
       <pubDate>Wed, 01 Jan 2020 22:39:53 +0800</pubDate>
       
       <guid>https://sadanspace.github.io/post/%E5%B0%91%E5%81%9A%E4%BA%8B%E6%98%AF%E6%8A%8A%E4%BA%8B%E5%81%9A%E6%88%90%E7%9A%84%E5%85%B3%E9%94%AE/</guid>
-      <description>​ ​想法太多 为什么会聊到这个话题呢？因为最近再次看到一些曾经看过，道理明显，讲的内容且都是同一个话题，那就是&amp;quot;少做事&amp;rdquo;</description>
+      <description>​ ​想法太多 为什么会聊到这个话题呢？因为最近再次看到一些曾经看过，道理明显，讲的内容且都是同一个话题，那就是&amp;quot;少做事&amp;quot;。</description>
     </item>
     
   </channel>

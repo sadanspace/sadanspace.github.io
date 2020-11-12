@@ -6,11 +6,7 @@
     <description>Recent content in 工作 on sadanspace&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 15 Jun 2020 22:39:53 +0800</lastBuildDate>
-    
-	<atom:link href="https://sadanspace.github.io/categories/%E5%B7%A5%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 15 Jun 2020 22:39:53 +0800</lastBuildDate><atom:link href="https://sadanspace.github.io/categories/%E5%B7%A5%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>概念：客户端负载均衡和服务端负载均衡</title>
       <link>https://sadanspace.github.io/post/client-side-vs-server-side-load-balance/</link>
